@@ -1,0 +1,5 @@
+[client]
+database = wl_db
+user = root
+password = blackjack228
+default-character-set = utf8
