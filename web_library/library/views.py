@@ -9,22 +9,65 @@ from .models import Anime
 from .serializers import AnimeSerializer
 
 
-class AnimeAPIView(APIView):
-    def get(self, request):
-        anime = Anime.objects.all()
-        return Response({'posts': AnimeSerializer(anime,many=True).data})
+class AnimeAPIList(generics.ListCreateAPIView): #GET/POST
+    queryset = Anime.objects.all()
+    serializer_class = AnimeSerializer
 
-    def post(self,request):
-        serializer = AnimeSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+
+
+class AnimeAPIUpdate(generics.UpdateAPIView):   #PUT
+    queryset = Anime.objects.all()
+    serializer_class = AnimeSerializer    
+
+
+
+
+class AnimeAPIDetailView(generics.RetrieveUpdateDestroyAPIView):    #CRUD
+    queryset = Anime.objects.all()
+    serializer_class = AnimeSerializer  
+
+
+
+#class AnimeAPIView(APIView):
+    #def get(self, request):
+        #anime = Anime.objects.all()
+        #return Response({'posts': AnimeSerializer(anime,many=True).data})
+
+    #def post(self,request):
+        #serializer = AnimeSerializer(data=request.data)
+        #serializer.is_valid(raise_exception=True)
+        #serializer.save()
         
-        post_new = Anime.objects.create(
-            title=request.data['title'],
-            genre=request.data['genre'],
-            studio=request.data['studio'],
-            year=request.data['year'],
-            rating=request.data['rating'],
-            comment_main=request.data['comment_main'],
-            comment_detailed=request.data['comment_detailed']
-        )
-        return Response({'post': AnimeSerializer(post_new).data})
+        #return Response({'post': serializer.data})
+
+    #def put(self, request, *args, **kwargs):
+        #pk = kwargs.get("pk",None)
+        #if not pk:
+            #return Response({"error": "Method PUT not allowed"})
+        
+        #try:
+            #instance = Anime.objects.get(pk=pk)
+        #except:
+            #return Response({"error": "Object PUT not exist"})
+
+        #serializer = AnimeSerializer(data=request.data, instance=instance)
+        #serializer.is_valid(raise_exception=True)
+        #serializer.save()
+        #return Response({"post": serializer.data})
+
+    #def delete(self, request, *args, **kwargs):
+        #pk = kwargs.get("pk",None)
+        #if not pk:
+            #return Response({"error": "Method DELETE not allowed"})
+
+        #try:
+            #instance = Anime.objects.delete(pk=pk)
+        #except:
+            #return Response({"error": "Object DELETE not exist"})
+
+        #serializer = AnimeSerializer(data=request.data, instance=instance)
+        #serializer.is_valid(raise_exception=True)
+        #serializer.save()
+
+
+        #return Response({"post": "delete post" + str(pk)})        

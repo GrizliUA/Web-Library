@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from library.views import AnimeAPIView
+from library.views import *
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/librarylist/', AnimeAPIView.as_view())
+    path('api/v1/animelist/', AnimeAPIList.as_view()),
+    path('api/v1/animelist/<int:pk>/', AnimeAPIUpdate.as_view()),
+    path('api/v1/animedetail/<int:pk>/', AnimeAPIDetailView.as_view())
 ]
