@@ -1,7 +1,8 @@
-from genericpath import exists
+from unicodedata import category
 from django.forms import model_to_dict
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from django.shortcuts import render
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,22 +10,48 @@ from .models import Anime
 from .serializers import AnimeSerializer
 
 
-class AnimeAPIList(generics.ListCreateAPIView): #GET/POST
-    queryset = Anime.objects.all()
+
+class AnimeViewSet(viewsets.ReadOnlyModelViewSet):
+    #queryset = Anime.objects.all()
     serializer_class = AnimeSerializer
 
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+        if not pk:
+            return Anime.objects.all()[:3]
+        return Anime.objects.filter(pk=pk)
+
+    @action(methods=['get'], detail=True)
+    def genres(self, request, pk = None):
+        anime = Anime.objects.get(pk=pk)
+        return Response({'genres': anime.genre})
 
 
-class AnimeAPIUpdate(generics.UpdateAPIView):   #PUT
-    queryset = Anime.objects.all()
-    serializer_class = AnimeSerializer    
 
 
 
 
-class AnimeAPIDetailView(generics.RetrieveUpdateDestroyAPIView):    #CRUD
-    queryset = Anime.objects.all()
-    serializer_class = AnimeSerializer  
+
+
+
+
+
+# class AnimeAPIList(generics.ListCreateAPIView): #GET/POST
+#     queryset = Anime.objects.all()
+#     serializer_class = AnimeSerializer
+
+
+
+# class AnimeAPIUpdate(generics.UpdateAPIView):   #PUT
+#     queryset = Anime.objects.all()
+#     serializer_class = AnimeSerializer    
+
+
+
+
+# class AnimeAPIDetailView(generics.RetrieveUpdateDestroyAPIView):    #CRUD
+#     queryset = Anime.objects.all()
+#     serializer_class = AnimeSerializer  
 
 
 
