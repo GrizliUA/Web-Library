@@ -5,26 +5,52 @@ from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 
 from .models import Anime
 from .serializers import AnimeSerializer
 
 
 
-class AnimeViewSet(viewsets.ReadOnlyModelViewSet):
-    #queryset = Anime.objects.all()
+
+class AnimeAPIList(generics.ListCreateAPIView):
+    queryset = Anime.objects.all()
+    serializer_class = AnimeSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+class AnimeAPIUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Anime.objects.all()
     serializer_class = AnimeSerializer
 
-    def get_queryset(self):
-        pk = self.kwargs.get("pk")
-        if not pk:
-            return Anime.objects.all()[:3]
-        return Anime.objects.filter(pk=pk)
+class AnimeAPIDestroy(generics.RetrieveDestroyAPIView):
+    queryset = Anime.objects.all()
+    serializer_class = AnimeSerializer
+    permission_classes = (IsAdminUser, )
 
-    @action(methods=['get'], detail=True)
-    def genres(self, request, pk = None):
-        anime = Anime.objects.get(pk=pk)
-        return Response({'genres': anime.genre})
+
+
+
+
+
+
+
+
+
+
+#class AnimeViewSet(viewsets.ReadOnlyModelViewSet):
+#    #queryset = Anime.objects.all()
+#    serializer_class = AnimeSerializer
+#
+#    def get_queryset(self):
+#        pk = self.kwargs.get("pk")
+#        if not pk:
+#            return Anime.objects.all()[:3]
+#        return Anime.objects.filter(pk=pk)
+#
+#    @action(methods=['get'], detail=True)
+#    def genres(self, request, pk = None):
+#        anime = Anime.objects.get(pk=pk)
+#        return Response({'genres': anime.genre})
 
 
 

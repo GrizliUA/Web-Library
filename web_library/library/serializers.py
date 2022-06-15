@@ -1,4 +1,4 @@
-import io
+from email.policy import default
 
 from .models import Anime
 from rest_framework import serializers
@@ -12,17 +12,9 @@ def max_value_current_year(value):
     return MaxValueValidator(datetime.date.today().year)(value)
 
 
-#class LibraryModel:
- #   def __init__(self, title, genre, year, rating):
- #       self.title = title
- #       self.genre = genre
- #       self.year = year
- #       self.rating = rating
-
-
-
-
 class AnimeSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Anime
         fields = "__all__"
@@ -33,7 +25,12 @@ class AnimeSerializer(serializers.ModelSerializer):
 
 
 
-
+#class LibraryModel:
+ #   def __init__(self, title, genre, year, rating):
+ #       self.title = title
+ #       self.genre = genre
+ #       self.year = year
+ #       self.rating = rating
 
 
 

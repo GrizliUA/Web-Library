@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -13,6 +14,7 @@ class Anime(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=1)
     comment_main = models.CharField(max_length=255, blank=True, null=True)
     comment_detailed = models.CharField(max_length=255, blank=True, null=True)
+    user = models.ForeignKey(User, verbose_name="Користувач", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
