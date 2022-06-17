@@ -1,5 +1,3 @@
-from email.policy import default
-
 from .models import Anime
 from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
