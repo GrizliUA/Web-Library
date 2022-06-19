@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from library.views import *
 
@@ -23,7 +23,9 @@ from library.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/anime/', AnimeAPIList.as_view()),
-    path('api/v1/anime/<int:pk>/', AnimeAPIUpdate.as_view()),
-    path('api/v1/animedelete/<int:pk>/', AnimeAPIDestroy.as_view())
+    path('accounts/profile/', include('djoser.urls')),
+    path('library/', include('library.urls')),
+    path('auth/', include('rest_framework.urls')),
+    path(r'auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]
