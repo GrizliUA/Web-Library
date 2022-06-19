@@ -3,21 +3,19 @@ The main idea of this project, to create web-library where you can anime you are
 
 
 ## Used technologies
--Django
--MySQL
--Djoser
+- Django
+- MySQL
+- Djoser
 
 
 ## Featured routes
-    http://127.0.0.1:8000/admin/				- Admin panel
-
+    http://127.0.0.1:8000/admin/			    	- Admin panel
 
     POST
-    http://127.0.0.1:8000/auth/users/			- Create New User
+    http://127.0.0.1:8000/auth/users/			    - Create New User
 
-
-    http://127.0.0.1:8000/auth/login/			- Log in
-    http://127.0.0.1:8000/auth/logout/			- Log out
+    http://127.0.0.1:8000/auth/login/			    - Log in
+    http://127.0.0.1:8000/auth/logout/			    - Log out
 
     POST
     http://127.0.0.1:8000/auth/token/login/			- username,password -> token
@@ -28,24 +26,18 @@ The main idea of this project, to create web-library where you can anime you are
     POST
     http://127.0.0.1:8000/auth/token/logout/		- authorization Token + token -> Token deactivation
 
-
-
-    http://127.0.0.1:8000/library/				- WIP
-
-
-
+    http://127.0.0.1:8000/library/				    - WIP
 
     http://127.0.0.1:8000/library/anime/			- Show all anime
     http://127.0.0.1:8000/library/anime/<int:pk>/		- Show anime with special ID
     http://127.0.0.1:8000/library/animedelete/<int:pk>/	- Delete anime with special ID
 
 
-
     auth/login/->
     http://127.0.0.1:8000/accounts/profile/			- Return a adress to user list
 
     GET
-    http://127.0.0.1:8000/auth/users/			- User list
+    http://127.0.0.1:8000/auth/users/			    - User list
     http://127.0.0.1:8000/auth/users/me/			- User info
 
 
