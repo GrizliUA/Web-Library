@@ -1,11 +1,17 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 from .models import Anime
 from .permissions import ReadOnly, IsOwnerOrAdminOrReadOnly
 from .serializers import AnimeSerializer
 
 
-class MyAnime(generics.ListCreateAPIView):
+class AnimeAPIListPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 10
+
+class MyAnimeAPI(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = AnimeSerializer
 
@@ -13,7 +19,7 @@ class MyAnime(generics.ListCreateAPIView):
         user = self.request.user
         return Anime.objects.filter(user=user)
 
-class AnimeByID(generics.RetrieveUpdateDestroyAPIView):
+class AnimeAPIByID(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrAdminOrReadOnly]
     serializer_class = AnimeSerializer
     
@@ -21,7 +27,7 @@ class AnimeByID(generics.RetrieveUpdateDestroyAPIView):
          pk = self.kwargs.get('pk')
          return Anime.objects.filter(id=pk)
 
-class AnimeByGenre(generics.ListAPIView):
+class AnimeAPIByGenre(generics.ListAPIView):
     permission_classes = [ReadOnly]
     serializer_class = AnimeSerializer
 
@@ -29,7 +35,7 @@ class AnimeByGenre(generics.ListAPIView):
         slug = self.kwargs.get('slug')
         return Anime.objects.filter(genre=slug)
 
-class AnimeByUserID(generics.ListAPIView):
+class AnimeAPIByUserID(generics.ListAPIView):
     permission_classes = [ReadOnly]
     serializer_class = AnimeSerializer
 
@@ -37,7 +43,8 @@ class AnimeByUserID(generics.ListAPIView):
         uid = self.kwargs.get('pk')
         return Anime.objects.filter(user=uid)
 
-class AnimeList(generics.ListAPIView):
+class AnimeAPIList(generics.ListAPIView):
     permission_classes = [ReadOnly]
     serializer_class = AnimeSerializer
     queryset = Anime.objects.all()
+    pagination_class = AnimeAPIListPagination
