@@ -48,3 +48,11 @@ The main idea of this project, to create web-library where you can anime you are
 ## Roadmap
  - Add more genres to one title
  - HTML + CSS page view for each urls
+
+
+
+## Updates
+
+### Update 1 (20.06.2022)
+ - Added new permissions.
+ - Updated and create new views and urls.
